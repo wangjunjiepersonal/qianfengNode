@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>图片上传</title>
+		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+	</head>
+	<body>
+		<input type="file" name="" id="file" />
+		<button class="btn">提交</button>
+		<img src="" alt="" />
+		<script>
+			$(function(){
+				$('.btn').click(function(){
+					let file = $('#file').get(0).files[0]
+					let formdata = new FormData()
+					formdata.append('file',file)
+					$.ajax({
+						type:"POST",
+						url:"http://localhost:3000/file/upload",
+						cache:false,
+						data:formdata,
+						processData:false,
+						contentType:false,
+						success:function(data){
+							 if (data.err == 0) {
+							 	$('img').attr('src',"http://localhost:3000/"+data.img)
+							 } else {
+							 	alert('上传失败请重试')
+							 }
+						}
+					});
+				})
+			})
+		</script>
+	</body>
+</html>
